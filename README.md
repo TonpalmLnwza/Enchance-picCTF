@@ -1,7 +1,7 @@
-# 🔠 rotation  
-**Credit:** [picoCTF - rotation](https://play.picoctf.org/practice/challenge/373)
+# Quantum Scrambler 
+**From-->** [picoCTF.org](https://play.picoctf.org/practice/challenge/479?category=3&page=1&search=)
 
-For beginners, this is a good start in cryptography. Why? Let's see:  
+This's a part of Reverse engineering from picoCTF.  
 ![image](https://github.com/user-attachments/assets/10a35568-d8fa-42bf-9b76-49e6a3d0996a)
 
 `"xqkwKBN{z0bib1wv_l3kzgxb3l_4k71n5j0}"`
