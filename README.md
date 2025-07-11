@@ -2,58 +2,95 @@
 **From-->** [picoCTF.org](https://play.picoctf.org/practice/challenge/479?category=3&page=1&search=)
 
 This's a part of Reverse engineering from picoCTF.  
-![image](<img width="940" height="787" alt="Image" src="https://github.com/user-attachments/assets/552eb60b-f4bb-4b78-9897-340c92f41f41" />)
-
-**Download-->** [Quantum_Scrambler.py](https://challenge-files.picoctf.net/c_verbal_sleep/8ae2427fa0efa37bd8fcb87e6d5ff72813c9f594334ae1270fddb981dfdc756b/quantum_scrambler.py)
+<img width="940" height="787" alt="Image" src="https://github.com/user-attachments/assets/c27e0877-2886-4e79-854e-42aea1f3a2ac" />
 
 ---
 
-## First step
-
-Take a look at the encrypted message.  
-Does it look familiar to you?  
-If not, take a little time to observe.
-
-```
-pico → xqkw  
-CTF  → KBN
-```
-
-It follows with the curly bracket `{` and ends with the curly bracket `}` too. What a coincidence!
-
-So, the next question is:  
-**"Yo, how will I turn `pico` into `xqkw`, or how will I turn `CTF` into `KBN`?"**  
-This is the fun part of the problem. Take a moment to observe.  
-If you're tired of trying — take a look below.
+## Problem description
+This is a reverse engineering challenge which give access tp a program that running on a server and we have to connect to it. And when we connect to it using netcat it will output a list of hex values. Also we have a python sript of the program.
 
 ---
 
-It's actually so simple. If you convert each character to its alphabetical index:
+## Problem sloving
+They give us a python file, and we will run on the webshell.picoctf.org by using "wget".
+- wget is a command-line tool that makes it possible to download files from the internet directly to active directory.
+
+<img width="1872" height="700" alt="Image" src="https://github.com/user-attachments/assets/c65d9408-6a9b-4083-8e50-31b018144e65" />
+
+- We connet to the server using netcat, it will output a list of hex values like showing in the following screen shot.
+
+<img width="1900" height="366" alt="Image" src="https://github.com/user-attachments/assets/23b91ff3-67bd-462a-bd2f-febd717417bc" />
+
+What's the Hex values - [Video](https://youtu.be/mjb8R20eD1U?si=K-5TEBWYbRlZI0a6)
+
+---
+## Analyze the Python Script
+
+```py
+import sys
+
+def exit():
+  sys.exit(0)
+
+def scramble(L):
+  A = L
+  i = 2
+  while (i < len(A)):
+    A[i-2] += A.pop(i-1)
+    A[i-1].append(A[:i-2])
+    i += 1
+    
+  return L
+
+def get_flag():
+  flag = open('flag.txt', 'r').read()
+  flag = flag.strip()
+  hex_flag = []
+  for c in flag:
+    hex_flag.append([str(hex(ord(c)))])
+
+  return hex_flag
+
+def main():
+  flag = get_flag()
+  cypher = scramble(flag)
+  print(cypher)
+
+if __name__ == '__main__':
+  main()
+```
+
+In the providing python script, the has mainly two functions we have to look, which are “scramble” and “get_flag”.
+
+First we look into the “scramble” funtion. In this function it scrambled the list that pass as argument by appending and removing list eliments and making it hard to understand.
+
+```py
+def scramble(L):
+  A = L
+  i = 2
+  while (i < len(A)):
+    A[i-2] += A.pop(i-1)
+    A[i-1].append(A[:i-2])
+    i += 1
+    
+  return L
+```
+
+In the “get_flag” function it read a file called “flag.txt” and then converting the read content to hex value and making a list of those values.
+
+```py
+def get_flag():
+  flag = open('flag.txt', 'r').read()
+  flag = flag.strip()
+  hex_flag = []
+  for c in flag:
+    hex_flag.append([str(hex(ord(c)))])
+
+  return hex_flag
 
 ```
-x q k w = 24 17 11 23  
-p i c o = 16  9  3 15
-```
 
-So, it's just a **-8 shift**.
-
-What about the uppercase part? Is it the same?
-
-```
-K B N = 11 2 14  
-C T F = 3 20 6
-```
-
-Sure it is! For example, if `'B'` got minus 8 (with wrap-around), it becomes `'T'`.
-
-So the function looks like this:
-
-```
-f(x) = (x - 8 + 26) % 26
-
-```
-
-Where `f(x)` is the encrypted alphabetical order of `x`.
+Also, in the main function it will call this tow function and finally it prints the output of the “scramble” function.
 
 ---
 
