@@ -92,44 +92,4 @@ def get_flag():
 
 Also, in the main function it will call this tow function and finally it prints the output of the “scramble” function.
 
----
-
-## 🚫 Stop the Bruteforce Campaign
-
-**Bruteforce is for monkeys only.**  
-We are civilized humans — so it's kinda good if you don't solve this one with just paper or Notepad.
-
-Here’s my decrypting code:
-
-```cpp
-#include "bits/stdc++.h"
-using namespace std;
-
-int main() {
-    string s; //--> given string s as an encrypted string
-    cin >> s;
-    for (auto i : s) { //--> iterate over s as i (range-based for loop)
-        char base; //--> base is the first order of i
-        // we will use base to tell if i is uppercase or lowercase
-        if (i >= 'a' && i <= 'z') base = 'a';     //--> lowercase
-        else if (i >= 'A' && i <= 'Z') base = 'A'; //--> uppercase
-        else {
-            cout << char(i);
-            continue;
-            // we skip the curly bracket once, so I assumed there's no need to decrypt symbols
-        }
-        cout << char((i - base - 8 + 26) % 26 + base);
-        // decrypt it as in the function above
-    }
-}
-```
-
-This code was written so simply.  
-If you can't read it — go learn CP. It will help you a lot in programming.
-
-If you don't get any part, feel free to ask me.  
-📩 IG: [a_phkhn](https://www.instagram.com/a_phkhn)
-
----
-
-**Have a nice day!**
+So, we can observed from this work flow, this program will read something from the “flag.txt” file, then convert it to hex value list and scrambled that list and finally print that scrambled hex value list
