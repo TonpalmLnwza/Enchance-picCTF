@@ -2,14 +2,13 @@
 **From-->** [picoCTF.org](https://play.picoctf.org/practice/challenge/479?category=3&page=1&search=)
 
 This's a part of Reverse engineering from picoCTF.  
-![image](https://github.com/user-attachments/assets/10a35568-d8fa-42bf-9b76-49e6a3d0996a)
+![image](<img width="940" height="787" alt="Image" src="https://github.com/user-attachments/assets/552eb60b-f4bb-4b78-9897-340c92f41f41" />)
 
-`"xqkwKBN{z0bib1wv_l3kzgxb3l_4k71n5j0}"`
-hint 1: Sometimes rotation is right
+**Download-->** [Quantum_Scrambler.py](https://challenge-files.picoctf.net/c_verbal_sleep/8ae2427fa0efa37bd8fcb87e6d5ff72813c9f594334ae1270fddb981dfdc756b/quantum_scrambler.py)
 
 ---
 
-## 🔎 Observation
+## First step
 
 Take a look at the encrypted message.  
 Does it look familiar to you?  
